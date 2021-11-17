@@ -5,85 +5,76 @@ app.renderer.backgroundColor = 0x000000;
 app.renderer.resize(window.innerWidth, window.innerHeight);
 document.body.appendChild(app.view);
 
+Object.assign(window, { app })
+
 //Loading Assets
+
 app.loader
-   .add('assets/SlotFrame.png', 'assets/SlotFrame.png')
-   .add('assets/SpinButton_Active.png', 'assets/SpinButton_Active.png')
-   .add('assets/SpinButton_Normal.png', 'assets/SpinButton_Normal.pmg')
-   .add('assets/Symbol_1.png', 'assets/Symbol_1.png')
-   .add('assets/Symbol_2.png', 'assets/Symbol_2.png')
-   .add('assets/Symbol_3.png', 'assets/Symbol_3.png')
-   .add('assets/Symbol_4.png', 'assets/Symbol_4.png')
-   .add('assets/Symbol_5.png', 'assets/Symbol_5.png')
-   .add('assets/Symbol_6.png', 'assets/Symbol_6.png')
-   .add('assets/Symbol_7.png', 'assets/Symbol_7.png')
-   .add('assets/Symbol_8.png', 'assets/Symbol_8.png')
-console.log(symbol)
-//SlotFrame
-const SlotFrameTexture = PIXI.Texture.from("assets/SlotFrame.png");
-const SlotFrameSprite = new PIXI.Sprite(SlotFrameTexture);
-app.stage.addChild(SlotFrameSprite);
+   .add('SpriteSheet', 'assets/SpriteSheet.json')
 
-//Button
-const spinButton = PIXI.Texture.from("assets/SpinButton_Normal.png");
-const spinButtonActive = PIXI.Texture.from("assets/SpinButton_Active.png");
+function onAssetsLoaded() {
+   //Symbols
+   let symbol = new PIXI.Sprite(PIXI.Texture.from('Symbol_1.png')); /// няма да е такова дълго и тъпо в послествие
+   app.stage.addChild(symbol);
 
-let button = new PIXI.Sprite(spinButton);
-button.x = app.screen.width / 2;
-button.y = app.screen.height / 2;
-button.anchor.set(-2.3, -2.8);
-button.interactive = true;
-button.buttonMode = true;
+   //Slot Frame
+   const slotFrame = new PIXI.Sprite(PIXI.Texture.from('SlotFrame.png'));
+   app.stage.addChild(slotFrame);
 
-button
-   .on('pointerdown', onButtonDown)
-   .on('pointerup', onButtonDown);
+   console.log(symbol)
 
-function onButtonDown() {
-   this.isdown = false;
-   if (this.isUp) {
-      this.texture = spinButton;
-   }
-   else {
-      this.texture = spinButtonActive;
-   }
+
+
+
+   //Button
+   const spinButton = PIXI.Texture.from("assets/SpinButton_Normal.png");
+   const spinButtonActive = PIXI.Texture.from("assets/SpinButton_Active.png");
+
+   let button = new PIXI.Sprite(spinButton);
+   button.x = app.screen.width / 2;
+   button.y = app.screen.height / 2;
+   button.anchor.set(-2.3, -2.8);
+   button.interactive = true;
+   button.buttonMode = true;
+
+   button
+      .on('pointerdown', onButtonDown)
+      .on('pointerup', onButtonDown);
+
+   function onButtonDown() {
+      this.isdown = false;
+      if (this.isUp) {
+         this.texture = spinButton;
+      }
+      else {
+         this.texture = spinButtonActive;
+      }
+   };
+   app.stage.addChild(button);
+
 };
-app.stage.addChild(button);
-
-//Symbols Array
-const symbolsTextures = [
-   PIXI.Texture.from('assets/Symbol_1.png'),
-   PIXI.Texture.from('assets/Symbol_2.png'),
-   PIXI.Texture.from('assets/Symbol_3.png'),
-   PIXI.Texture.from('assets/Symbol_4.png'),
-   PIXI.Texture.from('assets/Symbol_5.png'),
-   PIXI.Texture.from('assets/Symbol_6.png'),
-   PIXI.Texture.from('assets/Symbol_7.png'),
-   PIXI.Texture.from('assets/Symbol_8.png'),
-   PIXI.Texture.from('assets/Symbol_1.png'),
-];
-
+app.loader.load(onAssetsLoaded);
 //Spin Array
-let spin = [];
-const spinContainer = new PIXI.Container();
-const path_size = 5;
-for (i = 0; i < 3; i++) {
-   const path = new PIXI.Container();
-   path.x = i * path_size;
-   spinContainer.addChild(path);
-};
+// let spin = [];
+// const spinContainer = new PIXI.Container();
+// const path_size = 5;
+// for (i = 0; i < 3; i++) {
+//    const path = new PIXI.Container();
+//    path.x = i * path_size;
+//    spinContainer.addChild(path);
+// };
 
-const symbol_size = 5;
-for (j = 0; j < 4; j++) {
-   const symbol = new PIXI.Sprite(symbolsTextures[Math.floor(Math.random() * symbolsTextures.length)]);
+// const symbol_size = 5;
+// for (j = 0; j < 4; j++) {
+//    const symbol = new PIXI.Sprite(symbolsTextures[Math.floor(Math.random() * symbolsTextures.length)]);
 
-   symbol.scale.x = symbol.scale.y = Math.min(symbol_size / symbol.width, symbol_size / symbol.height);
-   symbol.x = Math.round((symbol_size - symbol.width) / 2);
-   symbol.push(spin);
-   path.addChild(spin);
-};
-console.log(spin)
-app.stage.addChild(spinContainer);
+//    symbol.scale.x = symbol.scale.y = Math.min(symbol_size / symbol.width, symbol_size / symbol.height);
+//    symbol.x = Math.round((symbol_size - symbol.width) / 2);
+//    symbol.push(spin);
+//    path.addChild(spin);
+// };
+// console.log(spin)
+// app.stage.addChild(spinContainer);
 
 
 /*
