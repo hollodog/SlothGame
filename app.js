@@ -13,44 +13,18 @@ app.loader
    .add('SpriteSheet', 'assets/SpriteSheet.json')
 
 function onAssetsLoaded() {
-   //Symbols
-   let symbol = new PIXI.Sprite(PIXI.Texture.from('Symbol_1.png')); /// няма да е такова дълго и тъпо в послествие
-   app.stage.addChild(symbol);
-
    //Slot Frame
    const slotFrame = new PIXI.Sprite(PIXI.Texture.from('SlotFrame.png'));
    app.stage.addChild(slotFrame);
 
-   console.log(symbol)
+   //Symbols
+   const symbolArr = [];
+   const symbolNum = Math.trunc(Math.random() * 8) + 1;
+   const symbol = new PIXI.Sprite(PIXI.Texture.from(`Symbol_${symbolNum}.png`));
+   symbolArr.push(symbol);
 
-
-
-
-   //Button
-   const spinButton = PIXI.Texture.from("assets/SpinButton_Normal.png");
-   const spinButtonActive = PIXI.Texture.from("assets/SpinButton_Active.png");
-
-   let button = new PIXI.Sprite(spinButton);
-   button.x = app.screen.width / 2;
-   button.y = app.screen.height / 2;
-   button.anchor.set(-2.3, -2.8);
-   button.interactive = true;
-   button.buttonMode = true;
-
-   button
-      .on('pointerdown', onButtonDown)
-      .on('pointerup', onButtonDown);
-
-   function onButtonDown() {
-      this.isdown = false;
-      if (this.isUp) {
-         this.texture = spinButton;
-      }
-      else {
-         this.texture = spinButtonActive;
-      }
-   };
-   app.stage.addChild(button);
+   app.stage.addChild(symbol);
+   console.log(symbolArr);
 
 };
 app.loader.load(onAssetsLoaded);
