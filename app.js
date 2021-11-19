@@ -18,14 +18,18 @@ function onAssetsLoaded() {
    app.stage.addChild(slotFrame);
 
    //Symbols
-   const symbolArr = [];
-   const symbolNum = Math.trunc(Math.random() * 8) + 1;
-   const symbol = new PIXI.Sprite(PIXI.Texture.from(`Symbol_${symbolNum}.png`));
-   symbolArr.push(symbol);
-
-   app.stage.addChild(symbol);
-   console.log(symbolArr);
-
+   const symbols = function onClick(){
+   for (let i=1; i<=15; i++){
+      const symbolArr = [];
+      const symbolNum = Math.trunc(Math.random() * 8) + 1;
+      const symbol = new PIXI.Sprite(PIXI.Texture.from(`Symbol_${symbolNum}.png`));
+      symbolArr.push(symbol);
+   
+      app.stage.addChild(symbol);
+      console.log(symbolArr);
+   };  //asdasdasdasdasd
+   
+};
 };
 app.loader.load(onAssetsLoaded);
 //Spin Array
