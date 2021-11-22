@@ -17,42 +17,30 @@ function onAssetsLoaded() {
    const slotFrame = new PIXI.Sprite(PIXI.Texture.from('SlotFrame.png'));
    app.stage.addChild(slotFrame);
 
-   //Symbols
-   const symbols = function onClick(){
-   for (let i=1; i<=15; i++){
-      const symbolArr = [];
-      const symbolNum = Math.trunc(Math.random() * 8) + 1;
-      const symbol = new PIXI.Sprite(PIXI.Texture.from(`Symbol_${symbolNum}.png`));
-      symbolArr.push(symbol);
-   
-      app.stage.addChild(symbol);
-      console.log(symbolArr);
-   };  //asdasdasdasdasd
-   
-};
+   //Symbols    
+   const symbolArrContainer = new PIXI.Container();
+
+   function onClick(){
+      const symbolArr = [] 
+      for(let i=0; i<=14 ; i++){
+         const symbolNum = Math.trunc(Math.random() * 8) + 1;
+         const symbol = new PIXI.Sprite(PIXI.Texture.from(`Symbol_${symbolNum}.png`));
+         symbol.x = (i%5)*270;
+         symbol.y = (i%3)*270;
+         app.stage.addChild(symbol);
+      };
+   };
+   //Button
+   const button = new PIXI.Sprite(PIXI.Texture.from(`SpinButton_Normal.png`));
+   button.interactive= true;
+   button.buttonMode = true;
+   button.x =  app.screen.width/1.53;
+   button.y =  app.screen.height/1.16;
+
+   button.addListener("pointerdown", onClick);
+   app.stage.addChild(button);
 };
 app.loader.load(onAssetsLoaded);
-//Spin Array
-// let spin = [];
-// const spinContainer = new PIXI.Container();
-// const path_size = 5;
-// for (i = 0; i < 3; i++) {
-//    const path = new PIXI.Container();
-//    path.x = i * path_size;
-//    spinContainer.addChild(path);
-// };
-
-// const symbol_size = 5;
-// for (j = 0; j < 4; j++) {
-//    const symbol = new PIXI.Sprite(symbolsTextures[Math.floor(Math.random() * symbolsTextures.length)]);
-
-//    symbol.scale.x = symbol.scale.y = Math.min(symbol_size / symbol.width, symbol_size / symbol.height);
-//    symbol.x = Math.round((symbol_size - symbol.width) / 2);
-//    symbol.push(spin);
-//    path.addChild(spin);
-// };
-// console.log(spin)
-// app.stage.addChild(spinContainer);
 
 
 /*
